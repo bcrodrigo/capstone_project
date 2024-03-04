@@ -30,7 +30,7 @@ The dataset was created during the NASA Space Apps Challenge in 2018, with the g
 **Total Dataset Size:** 
 - 406 MB
 **Comments:**
-- There are 41 images smaller than 250 x 250
+- There are 41 images smaller than 250 x 250, which might not be usable.
 ## 02 Forest Fire Dataset
 **Source:** 
 - https://www.kaggle.com/datasets/alik05/forest-fire-dataset
@@ -47,6 +47,7 @@ This is the dataset used for the article cited above. It was prepared by the sam
 **Comments:**
 - I found 56 images that exceeded the 250 x 250 size, so I've cropped them accordingly.
 
+
 # Project Steps
 
 These are the proposed Project Steps in order of complexity.
@@ -55,7 +56,7 @@ These are the proposed Project Steps in order of complexity.
 2. Train an image classifier with same-sized fire and non-fire images. 
 	1. Preprocess images to ensure they are all the same size
 	2. Investigate accuracy metrics for classification tasks
-	3. Start with simplest model (i. e. LeNet)
+	3. Start with simplest model (i.e. LeNet)
 	4. Identify state-of-the-art models that could do transfer learning (i.e. VGG, ResNet)
 3. Investigate segmentation of images
 4. Investigate re-sizing of images
@@ -63,6 +64,7 @@ These are the proposed Project Steps in order of complexity.
 
 # Directory Structure
 
+`PLACEHOLDER` 
 To provide details about the repository structure and its contents
 ```nohighlight
 ```

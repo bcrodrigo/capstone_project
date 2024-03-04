@@ -2,43 +2,67 @@ import numpy as np
 import pandas as pd
 import os
 
-def annotations_file():
-    '''
-    Function that creates the annotations file (.csv) for an image dataset.
+def annotations_file(path_to_dataset,dataset_foldername,img_folders):
+    '''Function that creates the annotations file (.csv) for an image dataset.
     The dataset is assumed to be divided into two folders according to the labels.
 
+    Parameters
+    ----------
+    path_to_dataset : str
+        String with the path pointing to the folder containing the dataset
+    dataset_foldername : str
+        Name of the folder containing all images
+    img_folders : list
+        List with the folder names containing the images. Both folders are assumed to be inside 
+        `dataset_foldername` and each position in the list is going to be mapped to a binary category
+        img_folders[0] --> category 0
+        img_folders[1] --> category 1
+
+    Returns
+    -------
+    dataframe
+        A dataframe contaning the list of images and their binary label
+
     '''
+    assert isinstance(path_to_dataset,str),'path_to_dataset must be a string'
+    assert isinstance(dataset_foldername,str),'dataset_foldername must be a string'
+    assert isinstance(img_folders,list),'img_folders must be a list'
 
-    path_to_dataset = '../data/'
-    dataset_foldername = '02_forest_fire_dataset'
-    fire_images_folder = 'training/fire'
-    nonfire_images_folder = 'training/nofire'
+    Nfolders = len(img_folders)
 
-    curr_path = path_to_dataset + dataset_foldername + '/' + fire_images_folder
-    curr_path_2 = path_to_dataset + dataset_foldername + '/' + nonfire_images_folder
+    df_list = []
 
-    fire_img_list = os.listdir(curr_path)
-    nonfire_img_list = os.listdir(curr_path_2)
+    for index in range(Nfolders):
 
-    fire_labels = np.ones(len(fire_img_list),dtype = int)
-    nonfire_labels = np.zeros(len(nonfire_img_list),dtype = int)
+        curr_folder = img_folders[index]
 
-    fire_df = pd.DataFrame(data = fire_img_list, columns=['item'])
-    fire_df['label'] = fire_labels
-    fire_df['item'] = fire_df['item'].apply(lambda x: fire_images_folder + '/' + x)
+        assert isinstance(curr_folder,str),'element of img_folders must be a string'
 
-    nonfire_df = pd.DataFrame(data = nonfire_img_list, columns = ['item'])
-    nonfire_df['label'] = nonfire_labels
-    nonfire_df['item'] = nonfire_df['item'].apply(lambda x: nonfire_images_folder + '/' + x )
+        curr_path = path_to_dataset + dataset_foldername + '/' + curr_folder
 
-    all_images_df = pd.concat([fire_df,nonfire_df],axis = 0)
-    all_images_df.info()
+        image_list = os.listdir(curr_path)
+        labels = index * np.ones(len(image_list), dtype = int)
+
+        temp_df = pd.DataFrame(columns = ['item'], data = image_list)
+
+        # update each item to include the image folder 
+        temp_df['item'] = temp_df['item'].apply(lambda x: curr_folder + '/' + x)
+
+        # add column with labels
+        temp_df['label'] = labels
+
+        df_list.append(temp_df.copy())
+
+    # concatenate dataframe list into a single file
+    all_images_df = pd.concat(df_list, axis = 0, ignore_index = True)
+    print(all_images_df.info())
 
     output_filename = 'labels_' + dataset_foldername + '.csv'
 
     # save annotations file as csv without header and index
     all_images_df.to_csv(path_to_dataset + dataset_foldername + '/' + output_filename, index = False, header = False)
 
+    return all_images_df
 
 
 def image_sizes(annotations_file,path_to_file):
