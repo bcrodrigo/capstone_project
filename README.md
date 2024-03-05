@@ -18,39 +18,51 @@ In order to train image classification models, the following labelled image data
 ## 01 Fire Dataset
 
 **Source:**
+
 - https://www.kaggle.com/datasets/phylake1337/fire-dataset
+
 **Description:** 
+
 The dataset was created during the NASA Space Apps Challenge in 2018, with the goal being to use the dataset to develop a model that can recognize the images with fire.
 
 **Number of images:** 999 in total
+
 - 755 outdoor fires
 - 244 non-fire images
+
 **Image size (pixels):** 
 - Variable, on average, they are 750 x 1187
+
 **Total Dataset Size:** 
 - 406 MB
+
 **Comments:**
 - There are 41 images smaller than 250 x 250, which might not be usable.
 ## 02 Forest Fire Dataset
 **Source:** 
 - https://www.kaggle.com/datasets/alik05/forest-fire-dataset
 - A. Khan, B. Hassan, S. Khan, R. Ahmed and A. Adnan, “DeepFire: A Novel Dataset and Deep Transfer Learning Benchmark for Forest Fire Detection,” Mobile Information System, vol. 2022, pp. 5358359, 2022 [doi](https://doi.org/10.1155/2022/5358359).
+
 **Description:** 
 This is the dataset used for the article cited above. It was prepared by the same group as 01_Fire_Dataset, but it provides more consistent sizing with all images.
+
 **Number of images:** 1900 in total
 - 950 fire images
 - 950 non-fire images
+
 **Image size (pixels):** 
 - 250 x 250
+
 **Total Dataset Size:** 
 - 149 MB
+
 **Comments:**
-- I found 56 images that exceeded the 250 x 250 size, so I've cropped them accordingly.
+- I found 74 images that exceeded the 250 x 250 size, so I've cropped them accordingly.
 
 
 # Project Steps
 
-These are the proposed Project Steps in order of complexity.
+These are the proposed Project Steps in order of complexity:
 
 1. Setup development environment for the PyTorch library
 2. Train an image classifier with same-sized fire and non-fire images. 
