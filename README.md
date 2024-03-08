@@ -7,19 +7,21 @@ According to the [BC government](https://www2.gov.bc.ca/gov/content/safety/wildf
 - Computer technology and predictive software
 - Lookout towers
 
-If not detected and managed early on, forest fires can become very destructive event that impacts both remote communities and large urban centres alike. Since it's not possible to have people in remote areas constantly monitoring, but rather autonomous vehicles (drones), satellite imagery, and optical systems, there is an opportunity to use deep learning models for image classification to enable early automated detection of fires.
+If not detected and managed early on, forest fires can become a very destructive event that impacts both remote communities and large urban centres alike. Considering the vastness of the territory in the province of BC and the low population density, it's not possible to have people in remote areas constantly monitoring, but rather autonomous vehicles (drones), satellite imagery, and optical systems. With the latter, there is an opportunity to use Deep Learning (DL) models for image classification and segmentation to enable early automated detection of fires. Some authors have reported 95% accuracy scores for DL models classifying forest fire images (see [doi](https://doi.org/10.1155/2022/5358359)).
 
-Having reliable automated and early detection of fires can impact the response time and management before they become too large to control. This ensures safety for those living in immediate proximity, as well as the firefighter crews. Additionally, the financial burden on taxpayers overall could be reduced. Just last year (2023) was one of the worst fire seasons on record, resulting in an overbudget of > $700 M for the provincial government in BC ([see this news article](https://vancouver.citynews.ca/2023/09/27/bc-projected-deficit-2023-q1/)).
+Having reliable automated and early detection of fires can impact the response time and management before they become too large to control. This ensures safety for those living in immediate proximity, as well as the firefighter crews. Additionally, the financial burden on taxpayers overall could be reduced. Last year (2023) was the worst fire seasons on record, resulting in an overbudget of > $700 M for the provincial government in BC ([see this news article](https://vancouver.citynews.ca/2023/09/27/bc-projected-deficit-2023-q1/)).
 
 # Project Steps
 
 These are the proposed Project Steps in order of complexity:
 
 1. Setup development environment for the PyTorch library
-2. Train an image classifier with same-sized fire and non-fire images. 
+	1. Setup `DataLoader` class
+	2. Organize Python modules in `src/` directory
+2. Train an image classifier with same-sized fire and non-fire images
 	1. Preprocess images to ensure they are all the same size
 	2. Investigate accuracy metrics for classification tasks (accuracy, precision, recall, F1 score)
-	3. Start with simplest model (i.e. LeNet)
+	3. Implement simplest CNN model (i.e. LeNet)
 	4. Identify state-of-the-art models that could do transfer learning (i.e. VGG, ResNet)
 3. Investigate segmentation of images
 4. Investigate resizing of images
@@ -39,19 +41,18 @@ In order to train image classification models, the following labelled image data
 
 The dataset was created during the NASA Space Apps Challenge in 2018, with the goal being to use the dataset to develop a model that can recognize the images with fire.
 
-**Number of images:** 999 in total
+**Number of images:** 999 in total, this includes
+- 755 outdoor fires (75%)
+- 244 non-fire images (25%)
 
-- 755 outdoor fires
-- 244 non-fire images
+**Image size (pixels):** Variable, on average, they are 750 x 1187
 
-**Image size (pixels):** 
-- Variable, on average, they are 750 x 1187
-
-**Total Dataset Size:** 
-- 406 MB
+**Total Dataset Size:** 406 MB
 
 **Comments:**
 - There are 41 images smaller than 250 x 250, which might not be usable.
+
+
 ## 02 Forest Fire Dataset
 
 **Source:** 
@@ -62,16 +63,13 @@ The dataset was created during the NASA Space Apps Challenge in 2018, with the g
 
 This is the dataset used for the article cited above. It was prepared by the same group as 01_Fire_Dataset, but it provides more consistent sizing with all images.
 
-**Number of images:** 
-1900 in total
+**Number of images:** 1900 in total
 - 950 fire images
 - 950 non-fire images
 
-**Image size (pixels):** 
-- 250 x 250
+**Image size (pixels):** 250 x 250
 
-**Total Dataset Size:** 
-- 149 MB
+**Total Dataset Size:** 149 MB
 
 **Comments:**
 - I found 74 images that exceeded the 250 x 250 size, so I've cropped them accordingly.
@@ -84,9 +82,9 @@ This is the dataset used for the article cited above. It was prepared by the sam
 
 **Description:** 
 
-The dataset contains 2,700 aerial and ground-based images, it has been curated from a diverse array of online platforms such as government databases, Flickr, and Unsplash. This dataset aims to capture a wide spectrum of environmental scenarios, forest variants, geographical locations, as well as confounding elements. 
+The dataset contains 2,700 aerial and ground-based images. The authors curated it from a diverse array of online platforms such as government databases, Flickr, and Unsplash. This dataset aims to capture a wide spectrum of environmental scenarios, forest variants, geographical locations, as well as confounding elements. 
 
-There are 3 sets of images: training, test, and validation. Within each set there are 2 classes, fire/nofire, and the images are further categorized as follows.
+There are 3 sets of images: training, test, and validation. Within each set there are 2 classes, fire/nofire, and the images are further categorized as follows
 
 ```bash
 .
@@ -99,18 +97,16 @@ There are 3 sets of images: training, test, and validation. Within each set ther
     └── Smoke_confounding_elements
 ```
 
-**Number of images:** 
-2700 images
 
-**Image size (pixels):** 
-- Variable, ranging from 
+**Number of images:** 2700 images in total with
+- 40% fire
+- 60% non-fire
 
-**Total Dataset Size:** 
-- 11 GB
+**Image size (pixels):** Variable
+
+**Total Dataset Size:** 11 GB
 
 **Comments:**
-
-
 
 # Directory Structure
 
@@ -122,4 +118,5 @@ To provide details about the repository structure and its contents
 
 # References
 
- A. Khan, B. Hassan, S. Khan, R. Ahmed and A. Adnan, “DeepFire: A Novel Dataset and Deep Transfer Learning Benchmark for Forest Fire Detection,” Mobile Information System, vol. 2022, pp. 5358359, 2022 [doi](https://doi.org/10.1155/2022/5358359).
+1. A. Khan, B. Hassan, S. Khan, R. Ahmed and A. Adnan, *DeepFire: A Novel Dataset and Deep Transfer Learning Benchmark for Forest Fire Detection* Mobile Information System, vol. 2022, pp. 5358359, 2022 [doi](https://doi.org/10.1155/2022/5358359).
+2. El-Madafri I, Peña M, Olmedo-Torre N. *The Wildfire Dataset: Enhancing Deep Learning-Based Forest Fire Detection with a Diverse Evolving Open-Source Dataset Focused on Data Representativeness and a Novel Multi-Task Learning Approach.* Forests. 2023; 14(9):1697.  [doi](https://doi.org/10.3390/f14091697)
