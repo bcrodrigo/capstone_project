@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 from torchvision.io import read_image
 
 class CustomFireImagesDataset(Dataset):
-    """Class for custom fire image dataset
+    """Class to create a custom fire image dataset
     
     Attributes
     ----------
@@ -48,6 +48,11 @@ class CustomFireImagesDataset(Dataset):
 
     def __len__(self):
         """Length Method for CustomFireImagesDataset
+        
+        Returns
+        -------
+        Integer
+            Length of the labels file
         """
         return len(self.labels)
 

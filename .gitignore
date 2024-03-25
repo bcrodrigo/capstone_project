@@ -8,3 +8,4 @@ directory_structure.txt
 # folders with image data
 datasets_original/
 data_preprocessing/
+src/sample_code/
