@@ -1,25 +1,23 @@
-from torch.utils.data import ConcatDataset
 import torch
-import torchvision.transforms as transforms
-from torchvision.transforms import v2
+from torch.utils.data import ConcatDataset
 
 
 def dataset_stat_prop(dataset):
-    """Function to calculate the statistical properties of a custom dataset
+    """Function to calculate the statistical properties of a custom dataset.
+    The intent is to use the calculated mean and std as an input to 
+    `torchvision.transforms.Normalize()` prior to training a model
     
     Parameters
     ----------
     dataset : object
-        Pytorch dataset object
+        Pytorch dataset object. Note that the images contained in the dataset 
+        should be in the [0,1] interval.
     
     Returns
     -------
     Tuple
-        mean and standard deviation of all images in dataset
+        mean and standard deviation of all images in dataset. 
     """
-
-    # Convert dataset into floating point otherwise it can't calculate the mean and std
-    dataset.transform = transforms.v2.ToDtype(torch.float)
     
     # stack all images together into a tensor of shape 
     # (N_images, 3, Height, Width)

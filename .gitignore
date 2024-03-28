@@ -4,8 +4,10 @@
 *.DS_Store
 # miscellaneous files
 to_do_list.md
+to_do_list_archive.md
 directory_structure.txt
 # folders with image data
 datasets_original/
 data_preprocessing/
+# folders with test code
 src/sample_code/
