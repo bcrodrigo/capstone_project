@@ -26,7 +26,9 @@ class CustomFireImagesDataset(Dataset):
         Parameters
         ----------
         annotations_file : string
-            Filename (.csv) containing the image names and labels
+            Filename (.csv) containing the image names and labels. Note the file is assumed
+            to not have any headers or indices, only two columns with `item` (name of image) 
+            and `label` (number indicating its class)
         directory : string
             Path (relative or absolute) to dataset directory, containing all images
         transform : None, optional
@@ -37,7 +39,8 @@ class CustomFireImagesDataset(Dataset):
         
         annotations_file_dir = os.path.join(self.directory, annotations_file)
         
-        self.labels = pd.read_csv(annotations_file_dir)
+        # Note we require the annotations file with no header
+        self.labels = pd.read_csv(annotations_file_dir, header = None)
         
         # transform to be applied on images
         self.transform = transform
