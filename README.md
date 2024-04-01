@@ -16,16 +16,25 @@ Having reliable automated and early detection of fires can impact the response t
 These are the proposed Project Steps in order of complexity:
 
 1. Setup development environment for the PyTorch library
-	1. Setup `DataLoader` class
-	2. Organize Python modules in `src/` directory
+	- [x] Setup `DataLoader` class
+	- [x] Organize Python modules in `src/` directory
 2. Train an image classifier with same-sized fire and non-fire images
-	1. Preprocess images to ensure they are all the same size
-	2. Investigate accuracy metrics for classification tasks (accuracy, precision, recall, F1 score)
-	3. Implement simplest CNN model (i.e. LeNet)
-	4. Identify state-of-the-art models that could do transfer learning (i.e. VGG, ResNet)
+	- [x] Preprocess `02_fire_dataset` images to ensure they are all the same size
+	- [x] Investigate accuracy metrics for classification tasks (accuracy, precision, recall, F1 score)
+	- [x] Implement simplest CNN model (i.e. LeNet)
+	- [x] Identify state-of-the-art models that could do transfer learning (i.e. VGG, ResNet)
+	- [x] Using `02_fire_dataset` train VGG19 with transfer learning, using the same hyperparameters as [authors](https://doi.org/10.1155/2022/5358359). 
+	- [x] Train ResNet18 with `02_fire_dataset` using same hyperparameters as [authors](https://doi.org/10.1155/2022/5358359). 
 3. Investigate segmentation of images
+	- Item cancelled, as it is out of scope. Will have to revisit for a future project.
 4. Investigate resizing of images
-	1. Evaluate what strategy to pursue for image resizing
+	- [ ]  Make a new version of the `03_the_wildfire_dataset` with square images (250 x 250).
+5. Compare VGG19 and Resnet18
+	- [ ] What is the nature of false positives and false negatives?
+	- [ ] Establish what is the most important metric for real-world deployment of these models.
+	- [ ] How do models perform doing predictions from images with confounding elements `03_the_wildfire_dataset`
+	- [ ] Can the models be re-trained with the `03_the_wildfire_dataset` and still perform well on unseen data?
+
 
 # Datasets
 
@@ -61,7 +70,7 @@ The dataset was created during the NASA Space Apps Challenge in 2018, with the g
 
 **Description:** 
 
-This is the dataset used for the article cited above. It was prepared by the same group as 01_Fire_Dataset, but it provides more consistent sizing with all images.
+This is the dataset used for the article cited above. It was prepared by the same group as `01_fire_dataset`, but it provides more consistent sizing with all images.
 
 **Number of images:** 1900 in total
 - 950 fire images
@@ -107,6 +116,7 @@ There are 3 sets of images: training, test, and validation. Within each set ther
 **Total Dataset Size:** 11 GB
 
 **Comments:**
+- Will likely need to resize this dataset to a consistent size that can be easily transformed (250 x 250)
 
 # Directory Structure
 
