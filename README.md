@@ -26,13 +26,13 @@ These are the proposed Project Steps in order of complexity:
 	- [x] Using `02_fire_dataset` train VGG19 with transfer learning, using the same hyperparameters as [authors](https://doi.org/10.1155/2022/5358359). 
 	- [x] Train ResNet18 with `02_fire_dataset` using same hyperparameters as [authors](https://doi.org/10.1155/2022/5358359). 
 3. Investigate segmentation of images
-	- Item cancelled, as it is out of scope. Will have to revisit for a future project.
+	- [x] Item cancelled, as it is out of scope. Will have to revisit for a future project.
 4. Make a new version of the `03_the_wildfire_dataset`
 	- [ ] Convert to square images of 250 x 250
 5. Compare VGG19 and ResNet
 	- [ ] What is the nature of false positives and false negatives?
-	- [ ] Establish what is the most important metric for real-world deployment of these models.
-	- [ ] How do models perform doing predictions from images with confounding elements `03_the_wildfire_dataset` ?
+	- [ ] What is the most important metric for real-world deployment of these models?
+	- [ ] How do models perform doing predictions from images with confounding elements (smoke, sunlight) from `03_the_wildfire_dataset` ?
 	- [ ] Can the models be re-trained with the `03_the_wildfire_dataset` and still perform well on unseen data?
 
 
@@ -120,11 +120,19 @@ There are 3 sets of images: training, test, and validation. Within each set ther
 
 # Directory Structure
 
-`PLACEHOLDER` 
-To provide details about the repository structure and its contents
-```nohighlight
-```
+TO DO: Provide some details about folder contents
 
+```nohighlight
+.
+├── README.md
+├── LICENSE
+├── jupyter_notebooks/
+├── reports/
+└── src/
+    ├── data/
+    ├── models/
+    └── visualization/
+```
 
 # References
 
