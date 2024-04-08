@@ -71,7 +71,7 @@ def calculate_conf_matrix(label_list,pred_list,model_name,img_classes,savefig = 
     model_name : string
         Name of the model being evaluated
     img_classes : list
-        Classes of the classification problem
+        Classes of the classification problem. Preferably a list of strings.
     savefig : bool, optional
         To save figure (confusion matrix) or not
     
@@ -100,7 +100,7 @@ def calculate_conf_matrix(label_list,pred_list,model_name,img_classes,savefig = 
 
     return report
 
-def plot_roc_curve(label_list,pred_list,model_name):
+def plot_roc_curve(label_list,pred_list,model_name, savefig = False):
     """Function to plot the ROC curve. It also calculates the AUC score.
     
     Parameters
@@ -111,6 +111,8 @@ def plot_roc_curve(label_list,pred_list,model_name):
         Predictions from the model
     model_name : string
         Name of the model being evaluated
+    savefig : bool, optional
+        To save figure (ROC curve with AUC score) or not
     
     Returns
     -------
@@ -130,6 +132,10 @@ def plot_roc_curve(label_list,pred_list,model_name):
     plt.grid()
     plt.title(f'ROC for {model_name}')
     plt.legend()
+
+    if savefig:
+        plt.savefig(f'roc_auc_score_{model_name}.png')
+
     plt.show()
 
     return score
