@@ -28,7 +28,7 @@ These are the proposed Project Steps in order of complexity:
 3. Investigate segmentation of images
 	- [x] Item cancelled, as it is out of scope. Will have to revisit for a future project.
 4. Make a new version of the `03_the_wildfire_dataset`
-	- [ ] Convert to square images of 250 x 250
+	- [x] Convert to square images of 250 x 250
 5. Compare VGG19 and ResNet
 	- [ ] What is the nature of false positives and false negatives?
 	- [ ] What is the most important metric for real-world deployment of these models?
