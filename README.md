@@ -38,9 +38,7 @@ These are the proposed Project Steps in order of complexity:
 
 # Datasets
 
-Follow the following ling for [[Dataset_Details]].
-
-
+Follow the following link to learn more details about the [Datasets](https://github.com/bcrodrigo/capstone_project/blob/main/references/Dataset_Details.md).
 
 # Directory Structure
 
@@ -51,6 +49,7 @@ TO DO: Provide some details about folder contents
 ├── README.md
 ├── LICENSE
 ├── jupyter_notebooks/
+├── references/
 ├── reports/
 └── src/
     ├── data/
@@ -58,7 +57,3 @@ TO DO: Provide some details about folder contents
     └── visualization/
 ```
 
-# References
-
-1. A. Khan, B. Hassan, S. Khan, R. Ahmed and A. Adnan, *DeepFire: A Novel Dataset and Deep Transfer Learning Benchmark for Forest Fire Detection* Mobile Information System, vol. 2022, pp. 5358359, 2022 [doi](https://doi.org/10.1155/2022/5358359).
-2. El-Madafri I, Peña M, Olmedo-Torre N. *The Wildfire Dataset: Enhancing Deep Learning-Based Forest Fire Detection with a Diverse Evolving Open-Source Dataset Focused on Data Representativeness and a Novel Multi-Task Learning Approach.* Forests. 2023; 14(9):1697.  [doi](https://doi.org/10.3390/f14091697)
