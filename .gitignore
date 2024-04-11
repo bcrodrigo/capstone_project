@@ -11,3 +11,11 @@ datasets_original/
 data_preprocessing/
 # folders with test code
 src/sample_code/
+# some jupyter notebooks
+jupyter_notebooks/_*.ipynb
+jupyter_notebooks/_old_/
+jupyter_notebooks/data/
+jupyter_notebooks/images/
+# folders in the src/
+src/__pycache__/
+src/*/__pycache__/
