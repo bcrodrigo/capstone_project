@@ -7,6 +7,8 @@ from sklearn.metrics import ConfusionMatrixDisplay
 
 from sklearn.metrics import roc_curve, roc_auc_score
 
+from torchvision.io import read_image
+
 def plot_loss_acc(history):
     '''Function for plotting training and validation losses and accuracies
     
@@ -95,7 +97,7 @@ def calculate_conf_matrix(label_list,pred_list,model_name,img_classes,savefig = 
     
     plt.show()
 
-    report = classification_report(label_list,pred_list)
+    report = classification_report(label_list,pred_list, digits = 4)
     print(report)
 
     return report
@@ -139,3 +141,57 @@ def plot_roc_curve(label_list,pred_list,model_name, savefig = False):
     plt.show()
 
     return score
+
+
+def plot_fp_fn(misc_df,path_to_dataset,model_name,savefig = False):
+    """Function to plot false positives and false negatives
+    
+    Parameters
+    ----------
+    misc_df : dataframe
+        Dataframe with misclassified labels. It's expected to contain
+        the following columns:
+            - item (name of image)
+            - label (true label)
+            - pred (model hard prediction)
+    path_to_dataset : string
+        Path to the directory containing the images listed in `misc_df`
+    model_name : string
+        Name of the model being evaluated
+    savefig : bool, optional
+        Boolean to specify if figures need to be saved or not. 
+        Default is False.
+    """
+
+    # to choose the kind of misclassification
+    # pred = 0 --> FN
+    # pred = 1 --> FP
+    miss = ['FN','FP']
+    
+    for k,ind_df in enumerate(misc_df.index):    
+        # true label
+        true = misc_df.loc[ind_df,'label']
+        # predicted label
+        pred = misc_df.loc[ind_df,'pred']
+        
+        title_str = f'true: {true}\npredicted: {pred}'
+    
+        full_img_path = os.path.join(path_to_dataset,misc_df.loc[ind_df,'item'])
+        extension = full_img_path[-4:]
+    
+        img = read_image(full_img_path)
+
+        plt.figure()
+        plt.title(title_str)
+        plt.imshow(img.permute(1,2,0))            
+
+        # remove all ticks from image plot
+        plt.tick_params(left = False, right = False, labelleft = False,
+                        labelbottom = False, bottom = False) 
+        
+        if savefig:
+            
+            figure_name = f'{model_name}_{miss[pred]}_ind{ind_df}_{extension}'
+            plt.savefig(figure_name,bbox_inches = 'tight')
+    
+        plt.show()
