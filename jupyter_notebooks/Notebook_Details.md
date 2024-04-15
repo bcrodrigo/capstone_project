@@ -3,17 +3,16 @@ This directory contains all the Jupyter Notebooks I used in this project for EDA
 ### 01_EDA_preprocessing
 These contain the EDA and preprocessing (correcting for wrong number of channels, resizing and cropping) for each of the original datasets I've downloaded.
 ### 02_Dataloader_02dataset
-To test defining a custom dataloader for the [DeepFire Dataset](https://doi.org/10.1155/2022/5358359).
+To test defining a custom `DataLoader` class for the [DeepFire Dataset](https://doi.org/10.1155/2022/5358359).
 ### 02.5_Checking_Datatypes
 Notebook to double check on datatypes and prevent issues for arising during training.
 ### 03_Implementing_LeNet5
 Here I implement LeNet5 and train it with two datasets
 - CIFAR10
 - DeepFire dataset
-Note that this notebook is only for learning and trobleshooting purposes.
+Note that this notebook is only for learning and troubleshooting purposes.
 ### 03_VGG19/Resnet18_TransferLearning
-In these notebooks I perform Transfer Learning on VGG19 and ResNet18: all layers are frozen and the last layer is replaced with a fully-connected layer that outputs 2 classes.
-
+In these notebooks I perform Transfer Learning on VGG19 and ResNet18: all layers are frozen and the last layer is replaced with a fully-connected layer that outputs 2 classes: `non-fire` and `fire`.
 The weights of the pre-trained models are downloaded from `torchvision.models` and the results of the training are further analyzed.
 ### 03.5_Model_Evaluation
 I compare VGG19 and ResNet18 against each other and against the results shown in the [DeepFire Dataset article](https://doi.org/10.1155/2022/5358359). Some evaluation metrics include: confusion matrix, accuracy, precision, recall, F1 score, AUC score and ROC curve.
