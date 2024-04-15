@@ -1,7 +1,7 @@
 This directory contains all the Jupyter Notebooks I used in this project for EDA, preprocessing, training, and model evaluation. The notebooks are numbered according to the project progression, and I've tried to name them with self-explanatory titles. Here, I'll provide some additional details for context
 
 ### 01_EDA_preprocessing
-These contain the EDA and preprocessing (correcting for wrong number of channels, resizing and cropping) for each of the original datasets I've downloaded.
+These contain the EDA and preprocessing steps for each of the original datasets I've downloaded. Some of these steps include correcting for wrong number of channels, resizing and cropping images. Lastly, the annotations files (containing image name and labels) are prepared.
 ### 02_Dataloader_02dataset
 To test defining a custom `DataLoader` class for the [DeepFire Dataset](https://doi.org/10.1155/2022/5358359).
 ### 02.5_Checking_Datatypes
