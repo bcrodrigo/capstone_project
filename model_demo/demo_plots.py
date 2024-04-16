@@ -47,12 +47,6 @@ def load_data(path_03_dataset,annot_file_test):
 
     # make dataset and dataloader
 
-    # # define transformations
-    # curr_transf = transforms.Compose([transforms.v2.ToDtype(torch.float),
-    #                 transforms.Normalize([0,0,0],[255,255,255]),
-    #                 transforms.Resize(size=(128,128)),
-    #                              ])
-
     curr_transf = transforms.Compose([transforms.ToTensor(),
         transforms.Resize(size=(128,128))
         ])
@@ -62,6 +56,30 @@ def load_data(path_03_dataset,annot_file_test):
     data_loader = DataLoader(dataset,batch_size = 1, shuffle = False)
     
     return df_images, data_loader
+
+@st.cache_data
+def load_all_models():
+    """To load all trained models to do predictions. Note all models are set
+    automatically to `eval()` mode.
+    
+    Returns
+    -------
+    dictionary
+        All loaded models in a dictionary.
+    """
+    model_dict = {'vgg_02':torch.load('../model_demo/vgg19_02dataset.pth'),
+                  'resnet_02':torch.load('../model_demo/resnet18_02dataset.pth'),
+                  'vgg_03':torch.load('../model_demo/vgg19_03dataset.pth'),
+                  'resnet_03':torch.load('../model_demo/resnet18_03dataset.pth')
+                 }
+    
+    model_dict['vgg_02'].eval()
+    model_dict['resnet_02'].eval()
+    model_dict['vgg_03'].eval()
+    model_dict['resnet_03'].eval()
+    
+    return model_dict
+
 
 img_class = ('non-fire','fire')
 
@@ -73,12 +91,9 @@ st.title('Image Classification of Forest Fires with Deep Neural Networks')
 dataset_options = ('DeepFire', 'Wildfire Dataset', 'DANGER')
 dataset_selection = st.selectbox('Select a Dataset', dataset_options)
 
-# st.write('You selected:', dataset_selection)
 path_dataset, annot_file_test = load_dataset_path(dataset_selection,dataset_options)
 df_images, data_loader = load_data(path_dataset,annot_file_test)
 
-# st.write('df_images shape[0]',df_images.shape[0])
-# st.write('length of data_loader',len(data_loader))
 
 # 2. Select an image class
 class_choice = st.radio('Select an Image Class',img_class, horizontal = True)
@@ -113,7 +128,6 @@ st.image(img_path, channels = 'rgb', caption = img_caption)
 
 # 5. make predictions
 click = st.button('Make predictions')
-st.write(click)
 
 # make predictions if button is clicked
 if click:
@@ -123,13 +137,39 @@ if click:
 
     image_index = selected_row['item'].index.item()
 
-    st.write('selected image index',image_index)
-    st.write('selected image name',selected_row['item'].values)
-
-    # create dataset and dataloader
-    st.write('len of data loader',len(data_loader))
-
     sample = next(itertools.islice(data_loader,image_index,image_index+1))
     img,label = sample
 
-    # st.image(img.squeeze(),)
+    
+    # Perform Prediction
+    model_dict = load_all_models()
+    softmax = torch.nn.Softmax(dim = 1)
+
+    predictions = []
+
+    for model in model_dict.values():
+    
+        pred_logits = model(img)
+        pred_prob = softmax(pred_logits).squeeze()
+
+        predictions.append(pred_prob.detach().numpy())
+        
+
+    # display multiple plots
+    model_name = ['VGG19','ResNet18','VGG19','ResNet18']
+
+    fig,ax_list = plt.subplots(2,2)
+
+    for k,ax in enumerate(ax_list.ravel()):
+        mod = model_name[k]
+        pred = predictions[k]
+        ax.bar([0,1],pred)
+        ax.set_ylim(0,1)
+        ax.set_xticks([0,1],['non-fire','fire'])
+
+        ax.set_ylabel('Probability')
+        ax.set_title(mod)
+
+    plt.tight_layout()
+
+    st.pyplot(fig)
