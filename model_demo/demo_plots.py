@@ -1,5 +1,5 @@
 # Demo Day Plots
-# Notebook to generate the plots for the Demo Day streamlit page.
+# Script to generate the plots for the Demo Day streamlit page.
 
 import streamlit as st
 
@@ -10,9 +10,6 @@ import matplotlib.pyplot as plt
 import os
 
 import torch
-
-# from torchvision.io import read_image
-# from torchvision import datasets
 
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
@@ -32,6 +29,7 @@ def load_dataset_path(dataset_selection,dataset_options):
         annot_file_test = 'labels_02_test_dataset_prep.csv'
         # mean and std calculated during training
         statistics = [[0.4249, 0.3509, 0.2731],[0.2766, 0.2402, 0.2612]]
+        img_class = ('non-fire','fire')
 
     elif dataset_selection == dataset_options[1]:
         
@@ -40,12 +38,17 @@ def load_dataset_path(dataset_selection,dataset_options):
         annot_file_test = 'labels_03_test_dataset.csv'
         # mean and std calculated during training
         statistics = [[0.4158, 0.4036, 0.3758],[0.2733, 0.2565, 0.2799]]
+        img_class = ('non-fire','fire')
 
     else:
-        pass
-        print('TO DO create a DANGER dataset')
+        # Danger Dataset - cats and dogs
+        path_dataset = '../data_preprocessing/danger_dataset_250x250'
+        annot_file_test = 'labels_danger_dataset_demoday.csv'
+        # placeholder statistics, we don't really need them for this
+        statistics = [[0,0,0],[1,1,1]]
+        img_class = ('cats','dogs')
 
-    return path_dataset,annot_file_test,statistics
+    return path_dataset,annot_file_test,statistics,img_class
 
 
 @st.cache_data
@@ -93,19 +96,20 @@ def load_all_models():
     return model_dict
 
 model_dict = load_all_models()
-img_class = ('non-fire','fire')
 
 # Print Title
 st.title('Image Classification of Forest Fires with Deep Neural Networks')
 
-with st.sidebar:
 
+# Contents of the sidebar
+
+with st.sidebar:
 
     # 1. Select a Dataset
     dataset_options = ('DeepFire', 'Wildfire Dataset', 'DANGER')
     dataset_selection = st.selectbox('Select a Dataset', dataset_options)
 
-    path_dataset, annot_file_test,statistics = load_dataset_path(dataset_selection,dataset_options)
+    path_dataset, annot_file_test,statistics, img_class = load_dataset_path(dataset_selection,dataset_options)
     df_images, data_loader = load_data(path_dataset,annot_file_test,statistics)
 
 
@@ -114,7 +118,7 @@ with st.sidebar:
 
     # filter df_images by class 
 
-    if class_choice == 'non-fire':
+    if class_choice == img_class[0]:
         
         df_filtered = df_images.query('label == 0')
 
@@ -144,8 +148,16 @@ with st.sidebar:
     # 5. Click to make predictions
     click = st.button('Make predictions')
 
+# Just to add two columns to name each model
+col1, col2= st.columns(2,gap = 'large')
+
 # make predictions if button is clicked
 if click:
+    with col1:
+        st.header('\tVGG19')
+
+    with col2:
+        st.header('ResNet18')
 
     # Find image index in df_images
     selected_row = df_images[df_images['item'] == selected_image]
@@ -157,10 +169,10 @@ if click:
 
     
     # Perform Prediction with each model
-    # model_dict = load_all_models()
     softmax = torch.nn.Softmax(dim = 1)
 
     predictions = []
+    
 
     for model in model_dict.values():
     
@@ -168,24 +180,32 @@ if click:
         pred_prob = softmax(pred_logits).squeeze()
 
         predictions.append(pred_prob.detach().numpy())
+
+    hard_pred = np.argmax(predictions,axis = 1)
         
 
-    # display multiple plots
-    model_name = ['VGG19','ResNet18','VGG19','ResNet18']
+    model_name = ['VGG19','ResNet18','VGG19','ResNet18']    
+    dataset_name = ['DeepFire','DeepFire','WildFire','WildFire']
+    labels = ['non-fire','fire'] 
 
     plt.style.use("seaborn-v0_8-darkgrid")
 
     fig,ax_list = plt.subplots(2,2)
 
     for k,ax in enumerate(ax_list.ravel()):
-        mod = model_name[k]
+        
         pred = predictions[k]
         ax.bar([0,1],pred)
         ax.set_ylim(0,1)
-        ax.set_xticks([0,1],['non-fire','fire'])
+        ax.set_xticks([0,1],labels)
 
         ax.set_ylabel('Probability')
-        ax.set_title(mod)
+
+        curr_pred = labels[hard_pred[k]]
+
+        curr_title = f'Prediction: {curr_pred}\nTrained on {dataset_name[k]}'
+
+        ax.set_title(curr_title)
 
     plt.tight_layout()
 
