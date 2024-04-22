@@ -1,4 +1,5 @@
-# Script to test deploying a streamlit app, minimizing resource usage
+# Script to test deploying a streamlit app
+# minimizing resource usage
 import streamlit as st
 
 import numpy as np
