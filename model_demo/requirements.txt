@@ -1,6 +1,0 @@
-# requirements file for demo_plots_online_app.py
-streamlit
-numpy
-pandas
-matplotlib
-#os
