@@ -1,0 +1,5 @@
+# requirements file for streamlit_online_app.py
+streamlit
+numpy
+pandas
+matplotlib
