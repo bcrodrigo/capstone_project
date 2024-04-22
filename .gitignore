@@ -19,3 +19,8 @@ jupyter_notebooks/images/
 # folders in the src/
 src/__pycache__/
 src/*/__pycache__/
+model_demo/__pycache__/
+# model files
+jupyter_notebooks/*.pt
+jupyter_notebooks/*.pth
+model_demo/*.pth
