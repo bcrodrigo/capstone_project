@@ -1,7 +1,5 @@
-# Script to deploy a streamlit app showcasing the predictions from trained models
-# Note that the predictions were done in advance and saved into separate dataframes
-# in order to minimize resource usage
-
+# Script to test deploying a streamlit app
+# minimizing resource usage
 import streamlit as st
 
 import numpy as np
@@ -10,26 +8,32 @@ import matplotlib.pyplot as plt
 
 import os
 
+# to set the page to wide layout by default
+def wide_space_default():
+    st.set_page_config(layout = 'wide')
+
+wide_space_default()
+
 @st.cache_data
 def load_data(dataset_selection,dataset_options):
 
     if dataset_selection == dataset_options[0]:
 
-        # DeepFire Dataset Selected
+        # DeepFire Dataset
         filename = './model_demo/prediction_files/predictions_DeepFire.csv'
         img_class = ('non-fire','fire')
         path_dataset = './model_demo/02_forest_fire_dataset_128x128/'
 
     elif dataset_selection == dataset_options[1]:
 
-        # WildFire Dataset Selected
+        # WildFire Dataset
         filename = './model_demo/prediction_files/predictions_Wildfire Dataset.csv'
         img_class = ('non-fire','fire')
         path_dataset = './model_demo/03_the_wildfire_dataset_128x128/'
 
     elif dataset_selection == dataset_options[2]:
 
-        # Danger Dataset - cats and dogs - Selected
+        # Danger Dataset - cats and dogs
         filename = './model_demo/prediction_files/predictions_DANGER.csv'
         img_class = ('cats','dogs')
         path_dataset = './model_demo/danger_dataset_128x128/'
@@ -40,6 +44,16 @@ def load_data(dataset_selection,dataset_options):
 
 # Print Title
 st.title('Image Classification of Forest Fires with Deep Neural Networks')
+
+expander = st.expander("Instructions")
+
+instructions = '''
+1. Select a Dataset from the sidebar dropdown
+2. Select an Image Class
+3. Choose an Image in the Dataset
+4. Click `Make Predictions`
+'''
+expander.markdown(instructions)
 
 # Contents of the sidebar
 with st.sidebar:
@@ -54,6 +68,7 @@ with st.sidebar:
     class_choice = st.radio('Select an Image Class',img_class, horizontal = True)
 
     # filter dataframe by class 
+
     if class_choice == img_class[0]:
         
         df_filtered = df_images_pred.query('label == 0')
@@ -81,16 +96,18 @@ with st.sidebar:
     # 5. Click to make predictions
     click = st.button('Make Predictions')
 
-# Just to add two columns to name each model
-col1, col2 = st.columns(2, gap = 'large')
+if dataset_selection == dataset_options[2]:
+    disclaimer = '''
+    ### WARNING
+
+    The models were only trained to classify fire and non-fire images.
+    
+    However, if we input an appropriately-sized RGB image, the models will still perform a prediction, even if it doesn't make sense!
+    '''
+    st.markdown(disclaimer)
 
 # make predictions if button is clicked
 if click:
-    with col1:
-        st.header('\tVGG19')
-
-    with col2:
-        st.header('ResNet18')
 
     # select row from dataframe
     selected_row = df_images_pred[df_images_pred['item'] == selected_image]
@@ -107,23 +124,39 @@ if click:
 
     plt.style.use("seaborn-v0_8-darkgrid")
 
-    fig,ax_list = plt.subplots(2,2)
+    # testing plotting on different containers
+    row1 = st.columns(2)
+    row2 = st.columns(2)
 
-    for k,ax in enumerate(ax_list.ravel()):
-        
-        pred = predictions[k,:]
-        ax.bar([0,1],pred)
-        ax.set_ylim(0,1)
-        ax.set_xticks([0,1],labels)
+    for ind,col in enumerate(row1 + row2):
+        tile = col.container(border = True)
 
-        ax.set_ylabel('Probability')
+        curr_subheader = f'{model_name[ind]} trained on {dataset_name[ind]}'
+        tile.subheader(curr_subheader)
 
-        curr_pred = labels[hard_pred[k]]
+        with tile:
 
-        curr_title = f'Prediction: {curr_pred}\nTrained on {dataset_name[k]}'
+            fig = plt.figure()
 
-        ax.set_title(curr_title)
+            pred = predictions[ind,:]
+            plt.bar([0,1],pred)
+            plt.ylim(0,1)
+            plt.yticks(np.arange(0,1.1,0.2), fontsize = 15)
+            plt.xticks([0,1],labels, fontsize = 15)
+            plt.ylabel('Probability', fontsize = 20)
 
-    plt.tight_layout()
+            curr_pred = labels[hard_pred[ind]]
 
-    st.pyplot(fig)
+            # if hard prediction is fire, colour text red
+            if hard_pred[ind]:
+                color = 'red'
+            else:
+                color = 'grey'
+
+            curr_title = f'Prediction: :{color}[{curr_pred}]'
+            st.write(curr_title)
+
+            st.pyplot(fig)
+
+    github_link = 'Back to [GitHub repository](https://github.com/bcrodrigo/capstone_project)'
+    st.markdown(github_link, unsafe_allow_html = True)
