@@ -28,7 +28,8 @@ Using the PyTorch library, I performed transfer learning with VGG19 and ResNet18
 For more details see [Datasets](https://github.com/bcrodrigo/capstone_project/blob/main/references/Dataset_Details.md).
 
 ## Online Streamlit App
-Follow [this link](https://image-classification-forest-fires.streamlit.app/) to see an online demonstration of the predictions of the models.
+![streamlit_demo](model_demo/streamlit_app_demo.gif)
+Follow [this link](https://image-classification-forest-fires.streamlit.app/) to see a deployed Streamlit app with the predictions of the models.
 
 ## Directory Structure
 ```bash
