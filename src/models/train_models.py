@@ -2,7 +2,7 @@ import torch
 import time
 from datetime import datetime
 
-def train_and_validate(model,loss_function,optimizer,N_EPOCHS,train_dataloader,val_dataloader):
+def train_and_validate(model,loss_function,optimizer,N_EPOCHS,train_dataloader,val_dataloader,DEVICE):
     """Function to run training and validation loops for a given model
     
     Parameters
@@ -19,6 +19,8 @@ def train_and_validate(model,loss_function,optimizer,N_EPOCHS,train_dataloader,v
         Training set dataloader
     val_dataloader : dataloader
         Validation set dataloader
+    DEVICE : string
+        Device that will perform the calculations: cuda, mps, or cpu
     
     Returns
     -------
@@ -32,6 +34,9 @@ def train_and_validate(model,loss_function,optimizer,N_EPOCHS,train_dataloader,v
     """
     assert isinstance(N_EPOCHS,int),'N_EPOCHS must be an integer'
     assert (N_EPOCHS >= 0),'N_EPOCHS must be positive'
+
+    # transfer model to selected device
+    model = model.to(DEVICE)
 
     # dictionary to accumulate losses and accuracies
     history = {
@@ -60,9 +65,9 @@ def train_and_validate(model,loss_function,optimizer,N_EPOCHS,train_dataloader,v
             # Get images and labels from batch
             images, true_labels = batch
 
-            # --- to be implemented ---
-            # images = images.to(device)
-            # true_labels = true_labels.to(device)
+            # transfer images and labels to selected device
+            images = images.to(DEVICE)
+            true_labels = true_labels.to(DEVICE)
 
             # make gradients zero
             optimizer.zero_grad()
@@ -108,9 +113,9 @@ def train_and_validate(model,loss_function,optimizer,N_EPOCHS,train_dataloader,v
 
                 images, true_labels = batch
 
-                # ------ to be implemented --------
-                # images = images.to(device)
-                # true_labels = true_labels.to(device)
+                # transfer images and labels to selected device
+                images = images.to(DEVICE)
+                true_labels = true_labels.to(DEVICE)
 
                 # forward pass
                 pred_logits = model(images)
