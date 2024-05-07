@@ -20,9 +20,9 @@ def load_data(dataset_selection,dataset_options):
     if dataset_selection == dataset_options[0]:
 
         # DeepFire Dataset
-        filename = './model_demo/prediction_files/predictions_DeepFire.csv'
+        filename = './model_demo/prediction_files/predictions_DeepFire_Dataset.csv'
         img_class = ('non-fire','fire')
-        path_dataset = './model_demo/02_forest_fire_dataset_128x128/'
+        path_dataset = './model_demo/02_forest_fire_dataset/'
 
     elif dataset_selection == dataset_options[1]:
 
