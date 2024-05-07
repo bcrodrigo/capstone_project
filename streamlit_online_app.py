@@ -27,9 +27,9 @@ def load_data(dataset_selection,dataset_options):
     elif dataset_selection == dataset_options[1]:
 
         # WildFire Dataset
-        filename = './model_demo/prediction_files/predictions_Wildfire Dataset.csv'
+        filename = './model_demo/prediction_files/predictions_WildFire_Dataset.csv'
         img_class = ('non-fire','fire')
-        path_dataset = './model_demo/03_the_wildfire_dataset_128x128/'
+        path_dataset = './model_demo/03_the_wildfire_dataset_250x250/'
 
     elif dataset_selection == dataset_options[2]:
 
