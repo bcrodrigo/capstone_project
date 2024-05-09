@@ -100,8 +100,10 @@ conda env create -n my_new_env -f pytorch_environment.yml
 
 ## Work In Progress
 - [ ] Uploading trained models
-- [ ] Implement device selection (CPU, GPU, MPS).
-- [ ] Implement more scripting and automation
+- [x] Implement device selection (CPU, GPU, MPS).
+- [ ] Implement more scripting and automation → make a package with `src/` folder
+- [ ] Update notebooks to reflect device selection
+- [ ] Update notebooks to include new package
 
 ## Next Steps
 - Explore additional training strategies
