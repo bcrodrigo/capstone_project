@@ -14,6 +14,10 @@ If not detected and managed early on, forest fires can become a very destructive
 Having reliable automated and early detection of fires can impact the response time and management before they become too large to control. This ensures safety for those living in immediate proximity, as well as the firefighter crews. Additionally, the financial burden on taxpayers overall could be reduced. Last year (2023) was the worst fire season on record, resulting in an overbudget of > $700 M for the provincial government in BC[^3].
 
 ## Datasets
+I mainly work with 2 labelled image datasets:
+- [DeepFire](https://www.kaggle.com/datasets/alik05/forest-fire-dataset](https://www.kaggle.com/datasets/alik05/forest-fire-dataset) dataset.
+- [Wildfire](https://www.kaggle.com/datasets/elmadafri/the-wildfire-dataset/data) dataset.
+
 For more details see [Datasets](https://github.com/bcrodrigo/capstone_project/blob/main/references/Dataset_Details.md).
 
 ## Workflow
