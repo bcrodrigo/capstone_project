@@ -15,7 +15,7 @@ Having reliable automated and early detection of fires can impact the response t
 
 ## Datasets
 I mainly work with 2 labelled image datasets:
-- [DeepFire](https://www.kaggle.com/datasets/alik05/forest-fire-dataset](https://www.kaggle.com/datasets/alik05/forest-fire-dataset) dataset.
+- [DeepFire](https://www.kaggle.com/datasets/alik05/forest-fire-dataset) dataset.
 - [Wildfire](https://www.kaggle.com/datasets/elmadafri/the-wildfire-dataset/data) dataset.
 
 For more details see [Datasets](https://github.com/bcrodrigo/capstone_project/blob/main/references/Dataset_Details.md).
