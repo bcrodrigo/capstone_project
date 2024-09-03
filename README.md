@@ -69,7 +69,8 @@ Using the PyTorch library, I performed transfer learning with VGG19 and ResNet18
 | AUC score |            0.8397            | 0.8381 |  0.8484  |
 
 ## Online Streamlit App
-![streamlit_demo](model_demo/streamlit_app_demo.gif)
+
+<img src="model_demo/streamlit_app_demo.gif" width="600">
 
 Follow [this link](https://image-classification-forest-fires.streamlit.app/) to see a deployed Streamlit app showcasing the predictions of the models, on images from different datasets.
 
