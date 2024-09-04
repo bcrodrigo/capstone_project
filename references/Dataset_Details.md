@@ -24,7 +24,7 @@ The dataset was created during the NASA Space Apps Challenge in 2018, with the g
 **Comments:**
 - There are 41 images smaller than 250 x 250, which might not be usable.
 
-## 02 Forest Fire Dataset
+## 02 Forest Fire Dataset (DeepFire)
 
 **Source:** 
 - https://www.kaggle.com/datasets/alik05/forest-fire-dataset
@@ -63,7 +63,7 @@ There are 3 sets of images: training, test, and validation. Within each set ther
     └── Smoke_confounding_elements/
 ```
 
-The dataset is used in reference [^2], to train MobileNetV3 under different strategies.
+The dataset is used in reference [^2], to train MobileNetV3 under different strategies. Note that in the publication, the images are organized in the folder structure detailed above. The kaggle link however, only provides 3 folders with train test and validation images.
 
 **Number of images:** 2700 images in total with
 - 40% fire
